@@ -15,7 +15,23 @@ async function test(name, key) {
   return await setredis(name, key);
 }
 
+function setredis1(name, key) {
+  console.log('setredis1============>>>>>>>>this',this)
+  const config = this.config;//这时候调用this是undefined
+  
+  const appid = config.appid;
+  const appname = config.appname;
+  try {
+    return appid + appname;
+  } catch (err) {
+    return false;
+  }
+}
+function test1(name, key) {
+  console.log('test1============>>>>>>>>this.config',this.config.appid) //外部调用
+  return setredis1(name, key);
+}
 module.exports = {
-  setredis,
   test,
+  test1,
 };
